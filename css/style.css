@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: #11426a;
+  font-family: 'Share Tech Mono', monospace;
+}
+.jojo-gang {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 60%;
+  height: auto;
+  margin: 0;
+  padding: 15px 0;
+  margin-left: 20%;
+  background: white;
+}
+.jobro {
+  position: relative;
+  display: inline-flex;
+  width: 30%;
+  height: 400px;
+  margin: 7px 0; 
+  overflow: hidden;
+  cursor: pointer;
+}
+.bg-pic {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.bg-pic img {
+  width: auto;
+  height: 100%;
+}
+.bg-pic .backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transition: .08s all linear;
+}
+.jobro:hover .backdrop {
+  background: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.info {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  color: white;
+  text-align: center;
+  z-index: 2;
+}
+.name {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 32px;
+  background: rgba(0, 0, 0, .7);
+}
+.type {
+  position: absolute;
+  top: 32px;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  line-height: 28px;
+  background: rgba(0, 0, 0, .7);
+}
+.health {
+  position: absolute;
+  bottom: 15px;
+  left: 10px;
+  padding: 2px 4px;
+  font-size: 20px;
+  background: rgb(12, 85, 12, .7);
+}
+.distance {
+  position: absolute;
+  bottom: 15px;
+  right: 10px;
+  padding: 2px 4px;
+  font-size: 20px;
+  background: rgb(110, 54, 22, .7);
+}
+.current-health, .max-health, .current-distance, .max-distance, .split {
+  display: inline-block;
+}

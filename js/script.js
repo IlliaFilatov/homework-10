@@ -132,7 +132,8 @@ function shake(current) {
   current.closest('.jobro').className += " shake";
   
   var value = +current.children[0].innerHTML;
-  value = value - 10;
+  var maxValue = +current.children[2].innerHTML;
+  value = Math.round(value - (maxValue/100 * 10));
   if (value < 0) value = 0;
   current.children[0].innerHTML = value;
 }

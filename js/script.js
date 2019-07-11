@@ -28,8 +28,8 @@ MilitaryResource.prototype.restore = function() {
   }
 };
 
-MilitaryResource.prototype.clone = function() {
-  return new MilitaryResource(this.type, this.health, this.distance);
+MilitaryResource.prototype.clone = function(arr) {
+  arr.push(new MilitaryResource(this.face, this.name, this.type, this.health, this.distance));
 };
 
 
@@ -95,29 +95,64 @@ Squad.prototype.cloneResource = function(){
 //ТЕСТИРОВАНИЕ 
 
 var jojoGang = [
-  joseph = new MilitaryResource("img/JoestarJoseph.png", "joseph joestar", "close range", 56, 99),
-  kakyoin = new MilitaryResource("img/NoriakiKakyoin.png", "kakyoin noriaki", "long range", 85, 10),
-  rohan = new MilitaryResource("img/KishibeRohan.png", "rohan kishibe", "close range", 112, 110)
+  joseph = new MilitaryResource("img/JoestarJoseph.png", "joseph joestar", "close range", 120, 120),
+  kakyoin = new MilitaryResource("img/NoriakiKakyoin.png", "kakyoin noriaki", "long range", 120, 120),
+  rohan = new MilitaryResource("img/KishibeRohan.png", "rohan kishibe", "close range", 120, 120)
 ]
 
-for(i=0;i<jojoGang.length;i++) {
-  document.getElementById('jojo').innerHTML += '<div class="jobro"></div>';
-  document.getElementById('jojo').lastChild.innerHTML += '<div class="bg-pic"></div>';
-  document.getElementsByClassName('bg-pic')[i].innerHTML += '<img src="' + jojoGang[i].face + '" alt=""></img>';
-  document.getElementsByClassName('bg-pic')[i].innerHTML += '<div class="backdrop"></div>';
-  document.getElementById('jojo').lastChild.innerHTML += '<div class="info"></div>';
-  document.getElementsByClassName('info')[i].innerHTML += '<div class="name">'+ jojoGang[i].name +'</div>';
-  document.getElementsByClassName('info')[i].innerHTML += '<div class="type">'+ jojoGang[i].type +'</div>';
-  document.getElementsByClassName('info')[i].innerHTML += '<div class="health"></div>';
-  document.getElementsByClassName('health')[i].innerHTML += '<div class="current-health">'+ jojoGang[i].health +'</div>';
-  document.getElementsByClassName('health')[i].innerHTML += '<div class="split">/</div>';
-  document.getElementsByClassName('health')[i].innerHTML += '<div class="max-health">'+ jojoGang[i].maxHealth +'</div>';
-  document.getElementsByClassName('info')[i].innerHTML += '<div class="distance"></div>';
-  document.getElementsByClassName('distance')[i].innerHTML += '<div class="current-distance">'+ jojoGang[i].distance +'</div>';
-  document.getElementsByClassName('distance')[i].innerHTML += '<div class="split">/</div>';
-  document.getElementsByClassName('distance')[i].innerHTML += '<div class="max-distance">'+ jojoGang[i].maxDistance +'</div>';
+// jojoGang[0].clone(jojoGang);
+
+function addCards() {
+  for(i=0;i<this.length;i++) {
+    document.getElementById('jojo').innerHTML += '<div class="jobro"></div>';
+    document.getElementById('jojo').lastChild.innerHTML += '<div class="bg-pic"></div>';
+    document.getElementsByClassName('bg-pic')[i].innerHTML += '<img src="' + this[i].face + '" alt=""></img>';
+    document.getElementsByClassName('bg-pic')[i].innerHTML += '<div class="backdrop"></div>';
+    document.getElementById('jojo').lastChild.innerHTML += '<div class="info"></div>';
+    document.getElementsByClassName('info')[i].innerHTML += '<div class="name">'+ this[i].name +'</div>';
+    document.getElementsByClassName('info')[i].innerHTML += '<div class="type">'+ this[i].type +'</div>';
+    document.getElementsByClassName('info')[i].innerHTML += '<div class="health" onclick="shake(this), dying(this)"></div>';
+    document.getElementsByClassName('health')[i].innerHTML += '<div class="current-health">'+ this[i].health +'</div>';
+    document.getElementsByClassName('health')[i].innerHTML += '<div class="split">/</div>';
+    document.getElementsByClassName('health')[i].innerHTML += '<div class="max-health">'+ this[i].maxHealth +'</div>';
+    document.getElementsByClassName('info')[i].innerHTML += '<div class="distance" onclick="shake(this), fatigue(this)"></div>';
+    document.getElementsByClassName('distance')[i].innerHTML += '<div class="current-distance">'+ this[i].distance +'</div>';
+    document.getElementsByClassName('distance')[i].innerHTML += '<div class="split">/</div>';
+    document.getElementsByClassName('distance')[i].innerHTML += '<div class="max-distance">'+ this[i].maxDistance +'</div>';
+  }
+}
+addCards.call(jojoGang);
+
+var list = [];
+list = document.getElementsByClassName('health');
+
+function shake(current) {
+  current.closest('.jobro').classList.remove("shake");
+  void current.closest('.jobro').offsetWidth;
+  current.closest('.jobro').className += " shake";
+  
+  var value = +current.children[0].innerHTML;
+  value = value - 10;
+  if (value < 0) value = 0;
+  current.children[0].innerHTML = value;
 }
 
+function dying(current) {
+  if(+current.children[0].innerHTML == 0) {
+    var element = current.closest('.jobro');
+    element.innerHTML += "<div class='right-cross'></div>"; 
+    element.innerHTML += "<div class='left-cross'></div>"; 
+    element.innerHTML += '<img src="img/bloody.jpg"></img>';
+    //  += "<div class='left-cross'></div>";
+  };
+}
+
+function fatigue(current) {
+  if(+current.children[0].innerHTML == 0) {
+    var element = current.closest('.jobro');
+    element.innerHTML += '<div class="fuel">Out of fuel</div>';
+  }
+}
 // var dovahkiin = new MilitaryResource("dragonborn", 120, 120);
 // var naruto = new MilitaryResource("ninja", 1, 90);
 // var t34 = new MilitaryResource("tank", 100, 0);

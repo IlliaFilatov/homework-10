@@ -1,3 +1,25 @@
+@keyframes blinks {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes shake {
+  0% {
+    transform: translate(0);
+  }
+  25% {
+    transform: translateX(6px)
+  }
+  50% {
+    transform: translateX(-4px)
+  }
+  75% {
+    transform: translateX(2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
 body {
   margin: 0;
   padding: 0;
@@ -15,6 +37,17 @@ body {
   margin-left: 20%;
   background: white;
 }
+.fuel {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: blinks 1s infinite;
+  color: red;
+  font-size: 28px;
+  z-index: 4;
+  white-space: nowrap;
+}
 .jobro {
   position: relative;
   display: inline-flex;
@@ -23,6 +56,38 @@ body {
   margin: 7px 0; 
   overflow: hidden;
   cursor: pointer;
+}
+.jobro.shake {
+  animation: shake .5s 1;
+}
+.jobro .left-cross {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -50%;
+  width: 550px;
+  height: 5px;
+  background: red;
+  transform: rotateZ(-45deg);
+  z-index: 3;
+}
+.jobro .right-cross {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -50%;
+  width: 550px;
+  height: 5px;
+  background: red;
+  transform: rotateZ(45deg);
+  z-index: 3;
+}
+.jobro img {
+  z-index: 3; 
+  width: 100%;
+  height: 100%;
+  opacity: .8;
+  transition: .3s all linear;
 }
 .bg-pic {
   position: absolute;
@@ -54,7 +119,7 @@ body {
   height: 100%;
   color: white;
   text-align: center;
-  z-index: 2;
+  z-index: 4;
 }
 .name {
   position: absolute;

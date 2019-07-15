@@ -47,6 +47,7 @@ body {
   font-size: 28px;
   z-index: 4;
   white-space: nowrap;
+  text-shadow: 1px 1px 0px black;
 }
 .jobro {
   position: relative;
@@ -58,7 +59,7 @@ body {
   cursor: pointer;
 }
 .jobro.shake {
-  animation: shake .5s 1;
+  animation: shake .3s 1;
 }
 .jobro .left-cross {
   content: '';
@@ -69,7 +70,7 @@ body {
   height: 5px;
   background: red;
   transform: rotateZ(-45deg);
-  z-index: 3;
+  z-index: 4;
 }
 .jobro .right-cross {
   content: '';
@@ -80,7 +81,7 @@ body {
   height: 5px;
   background: red;
   transform: rotateZ(45deg);
-  z-index: 3;
+  z-index: 4;
 }
 .jobro img {
   z-index: 3; 
@@ -97,6 +98,7 @@ body {
 .bg-pic img {
   width: auto;
   height: 100%;
+  opacity: 1;
 }
 .bg-pic .backdrop {
   position: absolute;

@@ -1,109 +1,76 @@
-//Набор для тестирования на 88 строке
+//КОНСТРУКТОРЫ
 
-function MilitaryResource(face, name, type, health, distance) {
-  this.face = face;
-  this.name = name;
-  this.type = type;
-  this.health = health;
-  this.maxHealth = 120;
-  this.distance = distance;
-  this.maxDistance = 120;
-}
-
-MilitaryResource.prototype.isReadyToMove = function() {
-  return this.distance !== 0;
-};
-
-MilitaryResource.prototype.isReadyToFight = function() {
-  return this.health === this.maxHealth;
-};
-
-MilitaryResource.prototype.restore = function() {
-  if (this.health < this.maxHealth) {
-    this.health = this.maxHealth;
-    this.distance = this.maxDistance;
-    return "Unit has been restored!";
-  } else {
-    return "Unit is already full of health&energy, sir!";
+var MilitaryResource = (function() {
+  function MilitaryResource(face, name, type, health, distance) {
+    this.face = face;
+    this.name = name;
+    this.type = type;
+    this.health = health;
+    this.maxHealth = 120;
+    this.distance = distance;
+    this.maxDistance = 120;
   }
-};
+  MilitaryResource.prototype.isReadyToMove = function() {
+    return this.distance !== 0;
+  }
+  MilitaryResource.prototype.isReadyToFight = function() {
+    return this.health === this.maxHealth;
+  }
+  MilitaryResource.prototype.restore = function() {
+    if (this.health < this.maxHealth) {
+      this.health = this.maxHealth;
+      this.distance = this.maxDistance;
+      return "Unit has been restored!";
+    } else {
+      return "Unit is already full of health&energy, sir!";
+    }
+  }
+  MilitaryResource.prototype.clone = function(arr) {
+    arr.push(new MilitaryResource(this.face, this.name, this.type, this.health, this.distance));
+  }
+  return MilitaryResource;
+}());
 
-MilitaryResource.prototype.clone = function(arr) {
-  arr.push(new MilitaryResource(this.face, this.name, this.type, this.health, this.distance));
-};
-
-
-function Squad(defaultResources) {
-  this.squad = [];
-  if (defaultResources) this.combineResources(defaultResources);
-  this.squad = defaultResources;
-}
-
-Squad.prototype.isReadyToMove = function() {
-  return this.squad.every(function(element){
-    return element.isReadyToMove();
-  });
-};
-
-Squad.prototype.isReadyToFight = function() {
-  return this.squad.every(function(element){
-    return element.isReadyToFight();
-  });
-};
-
-Squad.prototype.restore = function() {
-  this.squad.forEach(function(element){
-    element.restore();
-  });
-  return this.squad;
-};
-
-// Squad.prototype.getReadyToMoveResources = function() {
-//   var resourcesDistance = [];
-//   this.squad.forEach(function(element){
-//     if (element.distance != 0) resourcesDistance.push(element);
-//   });
-//   return resourcesDistance;
-// };
-
-Squad.prototype.getReadyToMoveResources = function() {
-  return this.squad.filter(function(element){
-    return element.isReadyToMove();
-  })
-};
-
-Squad.prototype.combineResources = function(defaultResources){
-  return defaultResources.sort(function() {
-    return 0.5 - Math.random();
-  });
-};
-
-// Squad.prototype.cloneResource = function(){
-//   var clonedSquad = [];
-//   this.squad.forEach(function(element){
-//     clonedSquad.push(element.clone());
-//   });
-//   return clonedSquad;
-// };
-
-Squad.prototype.cloneResource = function(){
-  return this.squad.map(function(element){
-     return element.clone();
-   });
-};
-
-//ТЕСТИРОВАНИЕ 
-
-var jojoGang = [
-  joseph = new MilitaryResource("img/JoestarJoseph.png", "joseph joestar", "close range", 120, 120),
-  kakyoin = new MilitaryResource("img/NoriakiKakyoin.png", "kakyoin noriaki", "long range", 120, 120),
-  rohan = new MilitaryResource("img/KishibeRohan.png", "rohan kishibe", "close range", 120, 120)
-]
-
-// jojoGang[0].clone(jojoGang);
-
-function addCards() {
-  for(i=0;i<this.length;i++) {
+var Squad = (function() {
+  function Squad(defaultResources) {
+    this.squad = [];
+    if (defaultResources) this.combineResources(defaultResources);
+    this.squad = defaultResources;
+  }
+  Squad.prototype.isReadyToMove = function() {
+    var ableUnit;
+    ableUnit = this.squad.every(function(element){
+      return element.isReadyToMove();
+    });
+    return ableUnit;
+  }
+  Squad.prototype.isReadyToFight = function() {
+    return this.squad.every(function(element){
+      return element.isReadyToFight();
+    });
+  }
+  Squad.prototype.restore = function() {
+    this.squad.forEach(function(element){
+      element.restore();
+    });
+    return this.squad;
+  }
+  Squad.prototype.getReadyToMoveResources = function() {
+    return this.squad.filter(function(element){
+      return element.isReadyToMove();
+    })
+  }
+  Squad.prototype.combineResources = function(defaultResources){
+    return defaultResources.sort(function() {
+      return 0.5 - Math.random();
+    });
+  };
+  Squad.prototype.cloneResource = function(){
+    return this.squad.map(function(element){
+      return element.clone();
+    });
+  }
+  Squad.prototype.addCard = function() {
     document.getElementById('jojo').innerHTML += '<div class="jobro"></div>';
     document.getElementById('jojo').lastChild.innerHTML += '<div class="bg-pic"></div>';
     document.getElementsByClassName('bg-pic')[i].innerHTML += '<img src="' + this[i].face + '" alt=""></img>';
@@ -120,8 +87,25 @@ function addCards() {
     document.getElementsByClassName('distance')[i].innerHTML += '<div class="split">/</div>';
     document.getElementsByClassName('distance')[i].innerHTML += '<div class="max-distance">'+ this[i].maxDistance +'</div>';
   }
-}
-addCards.call(jojoGang);
+  return Squad;
+}());
+
+
+//НЕКОНСТРУКТОРЫ
+
+
+var jojoGang = [
+  joseph = new MilitaryResource("img/JoestarJoseph.png", "joseph joestar", "close range", 120, 120),
+  kakyoin = new MilitaryResource("img/NoriakiKakyoin.png", "kakyoin noriaki", "long range", 120, 120),
+  rohan = new MilitaryResource("img/KishibeRohan.png", "rohan kishibe", "close range", 120, 120)
+];
+
+var jjba = new Squad(jojoGang);
+
+for(var i=0; i<jojoGang.length;i++) {
+  jjba.addCard.call(jojoGang);
+  console.log(this)
+};
 
 var list = [];
 list = document.getElementsByClassName('health');
@@ -136,7 +120,7 @@ function shake(current) {
   value = Math.round(value - (maxValue/100 * 10));
   if (value < 0) value = 0;
   current.children[0].innerHTML = value;
-}
+};
 
 function dying(current) {
   if(+current.children[0].innerHTML == 0) {
@@ -144,20 +128,15 @@ function dying(current) {
     element.innerHTML += "<div class='right-cross'></div>"; 
     element.innerHTML += "<div class='left-cross'></div>"; 
     element.innerHTML += '<img src="img/bloody.jpg"></img>';
-    //  += "<div class='left-cross'></div>";
   };
-}
+};
 
 function fatigue(current) {
   if(+current.children[0].innerHTML == 0) {
     var element = current.closest('.jobro');
     element.innerHTML += '<div class="fuel">Out of fuel</div>';
-  }
-}
-// var dovahkiin = new MilitaryResource("dragonborn", 120, 120);
-// var naruto = new MilitaryResource("ninja", 1, 90);
-// var t34 = new MilitaryResource("tank", 100, 0);
-// var t34Clone = t34.clone();
+  };
+};
 
 //Пак для отдельного юнита
 // console.log("is ready to fight: ", t34.isReadyToFight());

@@ -78,11 +78,11 @@ var Squad = (function() {
     document.getElementById('jojo').lastChild.innerHTML += '<div class="info"></div>';
     document.getElementsByClassName('info')[i].innerHTML += '<div class="name">'+ this[i].name +'</div>';
     document.getElementsByClassName('info')[i].innerHTML += '<div class="type">'+ this[i].type +'</div>';
-    document.getElementsByClassName('info')[i].innerHTML += '<div class="health" onclick="shake(this), dying(this), updateValue(this)"></div>';
+    document.getElementsByClassName('info')[i].innerHTML += '<div class="health" onclick="updateValue(this), shake(this), dying(this)"></div>';
     document.getElementsByClassName('health')[i].innerHTML += '<div class="current-health">'+ this[i].health +'</div>';
     document.getElementsByClassName('health')[i].innerHTML += '<div class="split">/</div>';
     document.getElementsByClassName('health')[i].innerHTML += '<div class="max-health">'+ this[i].maxHealth +'</div>';
-    document.getElementsByClassName('info')[i].innerHTML += '<div class="distance" onclick="shake(this), fatigue(this), updateValue(this)"></div>';
+    document.getElementsByClassName('info')[i].innerHTML += '<div class="distance" onclick="updateValue(this), shake(this), fatigue(this)"></div>';
     document.getElementsByClassName('distance')[i].innerHTML += '<div class="current-distance">'+ this[i].distance +'</div>';
     document.getElementsByClassName('distance')[i].innerHTML += '<div class="split">/</div>';
     document.getElementsByClassName('distance')[i].innerHTML += '<div class="max-distance">'+ this[i].maxDistance +'</div>';

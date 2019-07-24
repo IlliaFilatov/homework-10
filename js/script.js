@@ -20,14 +20,13 @@ var MilitaryResource = (function() {
     if (this.health < this.maxHealth) {
       this.health = this.maxHealth;
       this.distance = this.maxDistance;
-      return "Unit has been restored!";
     } else {
-      return "Unit is already full of health&energy, sir!";
+      // Эти строки возвращались просто из-за того, что раньше выводились сообщения о том, что было сделано. Можно не возвращать.
     }
   }
-  MilitaryResource.prototype.clone = function(arr) {
-    arr.push(new MilitaryResource(this.face, this.name, this.type, this.health, this.distance));
-  } // Так просто все ресурсы хранятся в массивах. Вот и тут мы указываем, в какой массив хотим запушить: в новый, специальный для клонированных, или тот же самый.
+  MilitaryResource.prototype.clone = function() {
+    jojoGang.push(new MilitaryResource(this.face, this.name, this.type, this.health, this.distance));
+  } // Пропустил момент с запретом на подобное использование объектов. Сорян. 
   return MilitaryResource;
 }());
 
@@ -98,7 +97,8 @@ var jojoGang = [
   joseph = new MilitaryResource("img/JoestarJoseph.png", "joseph joestar", "close range", 120, 120),
   kakyoin = new MilitaryResource("img/NoriakiKakyoin.png", "kakyoin noriaki", "long range", 120, 120),
   rohan = new MilitaryResource("img/KishibeRohan.png", "rohan kishibe", "close range", 120, 120)
-];
+],
+jjba = new Squad(jojoGang);
 
 function updateValue(current) {
   var value,
@@ -124,16 +124,6 @@ function updateValue(current) {
   current.children[0].innerHTML = value;
 };
 
-var jjba = new Squad(jojoGang);
-
-for(var i=0; i<jojoGang.length;i++) {
-  jjba.addCard.call(jojoGang);
-  console.log(this)
-};
-
-var list = [];
-list = document.getElementsByClassName('health');
-
 function shake(current) {
   current.closest('.jobro').classList.remove("shake");
   void current.closest('.jobro').offsetWidth;
@@ -156,27 +146,7 @@ function fatigue(current) {
   };
 };
 
-//Пак для отдельного юнита
-// console.log("is ready to fight: ", t34.isReadyToFight());
-// console.log("is ready to move: ", t34.isReadyToMove());
-// console.log("cloned unit: ", t34.clone());
-// console.log(t34.restore());
-// console.log("is ready to fight: ", t34.isReadyToFight());
-// console.log("is ready to move: ", t34.isReadyToMove());
-// console.log("cloned unit: ", t34Clone);
-
-// var warriorsSet = [];
-// warriorsSet.push(naruto, dovahkiin, t34);
-// var suicideSquad = new Squad(warriorsSet);
-
-// //Пак для отряда
-// console.log("is ready to move: ", suicideSquad.isReadyToMove());
-// console.log("is ready to fight: ", suicideSquad.isReadyToFight());
-// console.log("resources, ready to move: ", suicideSquad.getReadyToMoveResources());
-// console.log("cloned squad: ", suicideSquad.cloneResource());
-// suicideSquad.restore();
-// console.log("Восстановлены все юниты.");
-// console.log("is ready to move: ", suicideSquad.isReadyToMove());
-// console.log("is ready to fight: ", suicideSquad.isReadyToFight());
-// console.log("resources, ready to move: ", suicideSquad.getReadyToMoveResources());
-// console.log("cloned squad: ", suicideSquad.cloneResource());
+for(var i=0; i<jojoGang.length;i++) {
+  jjba.addCard.call(jojoGang);
+  console.log(this)
+};
